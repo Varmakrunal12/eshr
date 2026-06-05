@@ -2170,6 +2170,16 @@
       display: block;
     }
 
+    /* ── Touch targets: ensure all interactive elements are ≥44px ── */
+    @media (pointer: coarse) {
+      .nav-item { min-height: 44px; }
+      .topbar-btn { min-width: 44px; min-height: 44px; }
+      .btn { min-height: 44px; }
+      .btn-sm { min-height: 36px; }
+      .btn-xs { min-height: 32px; }
+      .otp-input { min-width: 44px; min-height: 50px; }
+    }
+
     /* Tablet & small laptop */
     @media (max-width: 1024px) {
       .grid-2 {
@@ -2270,8 +2280,8 @@
         font-weight: 700;
       }
       .topbar-btn {
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
         font-size: 14px;
       }
 
@@ -2290,8 +2300,9 @@
         padding: 10px 14px;
       }
       .nav-item {
-        padding: 10px 14px;
+        padding: 12px 14px;
         font-size: 13px;
+        min-height: 44px;
       }
 
       /* Cards */
@@ -2314,7 +2325,7 @@
         border-radius: 14px;
       }
       .stat-value {
-        font-size: 24px;
+        font-size: 22px;
       }
       .stat-label {
         font-size: 10px;
@@ -2332,8 +2343,8 @@
         gap: 0;
       }
       .form-input {
-        font-size: 14px;
-        padding: 11px 12px;
+        font-size: 16px; /* prevent iOS auto-zoom */
+        padding: 12px 12px;
         border-radius: 10px;
       }
       .form-label {
@@ -2348,21 +2359,25 @@
         gap: 6px;
       }
       .otp-input {
-        width: 40px;
-        height: 46px;
-        font-size: 18px;
+        width: 42px;
+        height: 50px;
+        font-size: 20px;
         border-radius: 8px;
       }
 
       /* Buttons */
       .btn {
-        padding: 11px;
+        padding: 12px;
         font-size: 14px;
         border-radius: 10px;
       }
       .btn-sm {
-        padding: 7px 12px;
+        padding: 8px 14px;
         font-size: 12px;
+        min-height: 36px;
+      }
+      .btn-xs {
+        min-height: 30px;
       }
 
       /* Profile */
@@ -2370,6 +2385,7 @@
         flex-direction: column;
         text-align: center;
         gap: 12px;
+        padding: 16px;
       }
       .profile-header > div {
         width: 100%;
@@ -2384,29 +2400,46 @@
         margin: 0 auto;
       }
 
-      /* Modals */
+      /* Modals — slide up from bottom on mobile */
       .modal-overlay {
-        padding: 10px;
+        padding: 0;
         align-items: flex-end;
       }
       .modal-box {
-        padding: 20px 16px;
+        padding: 20px 16px 32px;
         border-radius: 20px 20px 0 0;
-        max-height: 90vh;
+        max-height: 92vh;
         overflow-y: auto;
         width: 100% !important;
         max-width: 100% !important;
+        -webkit-overflow-scrolling: touch;
       }
       .modal-box.lg {
         border-radius: 20px 20px 0 0;
-        max-height: 92vh;
+        max-height: 94vh;
       }
       .modal-title {
         font-size: 15px;
+        padding-right: 32px;
       }
       .modal-close {
         top: 12px;
         right: 12px;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      /* Modal drag indicator */
+      .modal-box::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        margin: 0 auto 16px;
       }
 
       /* Vital grid */
@@ -2414,8 +2447,13 @@
         grid-template-columns: 1fr 1fr;
         gap: 10px;
       }
+      .vital-value {
+        font-size: 18px;
+      }
       .blood-group {
-        font-size: 28px;
+        width: 44px;
+        height: 44px;
+        font-size: 15px;
       }
 
       /* QR container */
@@ -2435,6 +2473,12 @@
       }
 
       /* Timeline */
+      .timeline {
+        padding-left: 24px;
+      }
+      .timeline-dot {
+        left: -20px;
+      }
       .timeline-card {
         padding: 12px;
       }
@@ -2459,22 +2503,37 @@
       .report-notes {
         display: none;
       }
+      .report-actions {
+        flex-direction: column;
+        gap: 4px;
+      }
 
       /* Doctor patient card */
       .patient-card {
-        padding: 10px;
+        padding: 12px;
       }
       .patient-name {
         font-size: 13px;
+      }
+      .patient-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
       }
 
       /* Search bar */
       .search-bar {
         padding: 10px 12px;
         gap: 8px;
+        flex-wrap: wrap;
       }
       .search-bar input {
-        font-size: 13px;
+        font-size: 16px; /* prevent iOS zoom */
+        min-width: 0;
+        flex: 1;
+      }
+      .search-bar .btn-sm {
+        flex-shrink: 0;
       }
 
       /* Section header */
@@ -2500,15 +2559,19 @@
       }
 
       /* AI chat */
+      .ai-chat-box {
+        height: 280px;
+      }
       .ai-input-row {
         gap: 8px;
       }
       .ai-input {
-        font-size: 13px;
+        font-size: 16px; /* prevent iOS zoom */
         padding: 10px 12px;
       }
       .ai-quick-chips {
         gap: 6px;
+        flex-wrap: wrap;
       }
       .ai-chip {
         font-size: 11px;
@@ -2537,16 +2600,37 @@
         grid-template-columns: 1fr;
         gap: 10px;
       }
+      /* Doctor Quick Actions — 2 per row on mobile */
+      #docCurrentPatientCard [style*="display:flex"] {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      #docCurrentPatientCard [style*="display:flex"] .btn-sm {
+        width: 100%;
+        justify-content: center;
+        font-size: 11px;
+        padding: 7px 6px;
+      }
 
-      /* Bottom spacing for mobile browsers */
+      /* Bottom spacing for mobile browser chrome */
       .main-content {
-        padding-bottom: 20px;
+        padding-bottom: env(safe-area-inset-bottom, 20px);
       }
 
       /* Make prescription medicines list responsive */
       .rx-med-row {
         flex-wrap: wrap;
         gap: 6px;
+      }
+      .rx-item {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .rx-item > .form-input,
+      .rx-item > select.form-input {
+        min-width: 0;
+        flex: 1 1 120px;
       }
 
       /* Pill select scrollable on mobile */
@@ -2565,11 +2649,12 @@
         flex-shrink: 0;
         font-size: 12px;
         padding: 6px 12px;
+        min-height: 32px;
       }
 
       /* QR scan modal */
       #qrScanModal .modal-box {
-        padding: 16px;
+        padding: 16px 14px 28px;
       }
       #qrScanArea {
         min-height: 220px !important;
@@ -2581,7 +2666,7 @@
         padding: 14px;
       }
       .emergency-header h2 {
-        font-size: 16px;
+        font-size: 15px;
       }
       .emergency-header p {
         font-size: 11px;
@@ -2590,15 +2675,77 @@
       /* File upload */
       .file-upload-label {
         font-size: 12px;
+        min-height: 44px;
       }
 
       /* Doctor info card */
       .doctor-badge {
         gap: 10px;
       }
+
+      /* Notification panel — full width on mobile */
+      .notif-panel {
+        width: calc(100vw - 16px);
+        right: 8px;
+        left: 8px;
+      }
+
+      /* Toast — full width on mobile */
+      #toast-container {
+        bottom: 16px;
+        right: 8px;
+        left: 8px;
+      }
+      .toast {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+      }
+
+      /* Share page link box wraps nicely */
+      .share-link-box {
+        word-break: break-all;
+        font-size: 11px;
+      }
+      .share-link-box .btn-sm {
+        flex-shrink: 0;
+        margin-left: 4px;
+      }
+
+      /* Allergy alert text wrapping */
+      .allergy-alert {
+        padding: 14px;
+      }
+      .allergy-alert-icon {
+        font-size: 36px;
+      }
+      .allergy-alert-title {
+        font-size: 15px;
+      }
+
+      /* Rx card header stacks on mobile */
+      .rx-card-header {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      /* Timer display smaller */
+      .timer-display {
+        font-size: 32px;
+      }
+
+      /* Doctor share profile page */
+      .doctor-info-card {
+        padding: 12px;
+      }
+
+      /* Aadhar search bar in doctor dashboard */
+      #docAadharInput {
+        font-size: 16px;
+      }
     }
 
-    /* Very small phones (320px) */
+    /* Very small phones (≤380px) */
     @media (max-width: 380px) {
       .stats-grid {
         grid-template-columns: 1fr 1fr;
@@ -2606,17 +2753,17 @@
       }
       .otp-input {
         width: 36px;
-        height: 42px;
-        font-size: 16px;
+        height: 44px;
+        font-size: 18px;
       }
       .otp-inputs {
         gap: 4px;
       }
       .auth-card {
-        padding: 20px 14px;
+        padding: 20px 12px 28px;
       }
       .stat-value {
-        font-size: 20px;
+        font-size: 18px;
       }
       .page {
         padding: 10px;
@@ -2624,6 +2771,19 @@
       #qrCanvas {
         width: 130px !important;
         height: 130px !important;
+      }
+      #qrCanvas2 {
+        width: 140px !important;
+        height: 140px !important;
+      }
+      .topbar-title {
+        font-size: 13px;
+      }
+      .section-title {
+        font-size: 16px;
+      }
+      .modal-title {
+        font-size: 14px;
       }
     }
 
@@ -2648,6 +2808,32 @@
       }
       .auth-logo h1 {
         font-size: 18px;
+      }
+      /* Two-column auth form in landscape */
+      .auth-card .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      .modal-overlay {
+        align-items: center;
+        padding: 8px;
+      }
+      .modal-box {
+        border-radius: var(--radius2);
+        max-height: 96vh;
+      }
+    }
+
+    /* Safe area insets for iPhone notch / home bar */
+    @supports (padding: env(safe-area-inset-bottom)) {
+      .sidebar {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .modal-box {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+      }
+      .topbar {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
       }
     }
   </style>
